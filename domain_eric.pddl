@@ -45,16 +45,6 @@
         ; key location according to the map + colour of the key
         ;(key-colour ?loc - location ?col - colour)
 
-        ;(locked-corr ?corr - corridor ?col - colour)
-
-        ;(is-collapsed ?cor - corridor)  ; is the corridor collapsed?
-
-        ;(is-messy ?loc - location)  ; is the room at location messy?
-
-        ;(hero-holding ?k - key)             ; currently held key?
-        ; in lists - holding
-
-
     )
 
     ; IMPORTANT: You should not change/add/remove the action names or parameters
