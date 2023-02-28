@@ -37,7 +37,7 @@
         (is-lock ?cor - corridor)
         
         ; Indicates checking the corridor is riskly or not
-        (is-risky ?cor - corridor)  ; is the corridor risky?
+        (is-risky ?cor - corridor)
         
         ; Indicates a key, its location and colour
         ;(key-at ?k - key ?loc - location ?col - colour)
