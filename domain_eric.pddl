@@ -41,9 +41,6 @@
         
         ; Indicates a key, its location and colour
         ;(key-at ?k - key ?loc - location ?col - colour)
-        
-        ; key location according to the map + colour of the key
-        ;(key-colour ?loc - location ?col - colour)
 
     )
 
