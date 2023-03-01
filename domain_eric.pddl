@@ -16,7 +16,7 @@
         red yellow green purple rainbow - colour
     )
 
-    ; You may introduce whatever predicates you would like to use
+        ; You may introduce whatever predicates you would like to use
     (:predicates
 
         ; Indicates hero's location
@@ -26,7 +26,7 @@
         (room ?loc - location)
         
         ; Indicates a corridor
-        (corridor ?loc-1 ?loc-2 - location)
+        (corridor ?from ?to - location)
 
         ; Indicates the corridor's location
         (corridor-at ?cor - corridor)
@@ -70,8 +70,12 @@
         ; Indicates checking the location is messy or not
         (is-messy ?loc - location)
         
+        ; Indicates the corridor is collapsed or not
+        (is-collapsed ?cor - corridor)
+        
         ; Indicates key usage
         ;(key-usage ?k - key ?col - colour ?u - usage)
+
     )
 
     ; IMPORTANT: You should not change/add/remove the action names or parameters
@@ -87,7 +91,7 @@
         :parameters (?from ?to - location ?cor - corridor)
 
         :precondition (and
-            
+
             ; Indicates hero at ?from
             (hero-at ?from)
             
@@ -95,19 +99,10 @@
             (corridor ?from ?to)
             
             ; Indicates corridor at ?cor
-            (corridor-at ?cor - corridor)
+            (corridor-at ?cor)
             
-            ; Indicates checking ?cor exists between ?from and ?to
-            
-            
-            ; Indicates checking is lock in ?cor
-            (is-lock ?cor - corridor)
-            ; if there is a locked door change ?to to another location
-            ; whcih I'm not sure can be done or not
-            ; maybe need to restart :action move
-            
-            ; else move to ?to
-            ; which is in :effect below
+            ; Indicates there isn't locked door in ?cor
+            (not (is-lock ?cor))
             
         )
 
@@ -119,8 +114,19 @@
             ; Indicates hero not at location ?from
             (not (hero-at ?from))
             
-            ; Indicates checking the corridor is riskly or not
-            ; if not riskly move on
+            ; Indicates checking ?cor is riskly or not
+            (when (is-risky ?cor)
+            
+                (and
+                
+                    ; Indicates checking ?cor is
+                    (is-collapsed ?cor)
+                    
+                    ; Indicates checking ?to is messy or not
+                    (is-messy ?to)
+                    
+                )
+            )
             
         )
     )
