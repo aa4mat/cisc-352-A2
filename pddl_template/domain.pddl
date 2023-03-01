@@ -25,7 +25,7 @@
         (connected ?loc - location ?cor - corridor)
 
         ;The key at ?loc location
-        (keyloc ?k - key ?loc - location)
+        (key-at ?k - key ?loc - location)
 
         ; Indicates the location is messy
         (messy ?loc - location)
@@ -37,7 +37,7 @@
         (is-locked ?cor - corridor)
 
         ; Lock Locked and lock colour
-        (lockedcolor ?cor - corridor ?colour - colour)
+        (lock-colour ?cor - corridor ?colour - colour)
 
         ; is the corridor risky?
         (is-risky ?cor - corridor)
@@ -46,7 +46,7 @@
         (is-collapsed ?cor - corridor)
 
         ; Key colour
-        (key-color ?k - key ?colour - colour)
+        (key-colour ?k - key ?colour - colour)
 
         ;key can't use
         (cant-use ?k - key)
@@ -168,17 +168,17 @@
         :precondition (and
 
             ; IMPLEMENT ME
+            (hero-at ?loc)
             (is-carry ?k)
 
             ; The hero can unlock the lock
-            (hero-at ?loc)
             (connected ?loc ?cor)
             (is-locked ?cor)
             (not (cant-use ?k))
 
             ; Color of the key and the lock are same
-            (key-color ?k ?col)
-            (lockedcolor ?cor ?col)
+            (key-colour ?k ?col)
+            (lock-colour ?cor ?col)
 
         )
 

@@ -34,10 +34,10 @@
 
 
     ; Key locations
-    (keyloc key1 loc-1-2)
-    (keyloc key2 loc-2-1)
-    (keyloc key3 loc-2-2)
-    (keyloc key4 loc-2-3)
+    (key-at key1 loc-1-2)
+    (key-at key2 loc-2-1)
+    (key-at key3 loc-2-2)
+    (key-at key4 loc-2-3)
 
 
     ; Locked corridors
@@ -48,19 +48,19 @@
     (is-locked c2232)
     (is-locked c3242)
 
-    (lockedcolor c1222 yellow)
-    (lockedcolor c2122 purple)
-    (lockedcolor c2223 yellow)
-    (lockedcolor c2232 green)
-    (lockedcolor c3242 rainbow)
+    (lock-colour c1222 yellow)
+    (lock-colour c2122 purple)
+    (lock-colour c2223 yellow)
+    (lock-colour c2232 green)
+    (lock-colour c3242 rainbow)
 
     ; Risky corridors
 
     ; Key colours
-    (key-color key1 green)
-    (key-color key2 rainbow)
-    (key-color key3 purple)
-    (key-color key4 yellow)
+    (key-colour key1 green)
+    (key-colour key2 rainbow)
+    (key-colour key3 purple)
+    (key-colour key4 yellow)
 
     ; Key usage properties (one use, two use, etc)
     (one-use key1)
