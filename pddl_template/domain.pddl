@@ -114,19 +114,23 @@
     ;    - the hero's arm is free,
     ;    - the location is not messy
     ;Effect will have the hero holding the key and their arm no longer being free
-    (:action pick-up
+        (:action pick-up
 
         :parameters (?loc - location ?k - key)
 
         :precondition (and
 
-            ; IMPLEMENT ME
+            (hero-at ?loc)
+            (key-at ?k ?loc)
+            (is-free ?k)
+            (not (is-messy ?loc))
 
         )
 
         :effect (and
 
-            ; IMPLEMENT ME
+            (is-carry ?k)
+            (not (is-free ?k))
 
         )
     )
