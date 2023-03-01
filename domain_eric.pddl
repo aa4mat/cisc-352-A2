@@ -22,26 +22,56 @@
         ; Indicates hero's location
         (hero-at ?loc - location)
         
+        ; Indicates a room
+        (room ?loc - location)
+        
         ; Indicates a corridor
         (corridor ?loc-1 ?loc-2 - location)
 
         ; Indicates the corridor's location
         (corridor-at ?cor - corridor)
         
-        ; Indicates check the corridor is between current location or not
+        ; Indicates checking the corridor is between hero's location and the 
+        ; ohter room or not
         
-        ; Indicates a lock in corridor
+        ; Indicates a lock is in the corridor
         (lock-at ?cor - corridor)
         
-        ; Indicates checking the corridor is lock or not
+        ; Indicates checking the corridor is locked or not
         (is-lock ?cor - corridor)
         
         ; Indicates checking the corridor is riskly or not
         (is-risky ?cor - corridor)
         
-        ; Indicates a key, its location and colour
-        ;(key-at ?k - key ?loc - location ?col - colour)
+        ; Indicates a key
+        (key ?k - key)
+        
+        ; Indicates a key's location
+        (key-at ?k - key ?loc - location)
+        
+        ; Indicates checking the key is at the location or not
+        (is-key-loc ?k - key ?loc - location)
+        
+        ; Indicates the hero's arm is free
+        (free ?k - key)
 
+        ; Indicates checking the hero's arm is free or not
+        (is-free ?k - key)
+        
+        ; Indicates the hero is carrying a key
+        (carry ?k - key)
+
+        ; Indicates checking the hero's arm is carrying a key or not
+        (is-carry ?k - key)
+
+        ; Indicates the location is messy
+        (messy ?loc - location)
+        
+        ; Indicates checking the location is messy or not
+        (is-messy ?loc - location)
+        
+        ; Indicates key usage
+        ;(key-usage ?k - key ?col - colour ?u - usage)
     )
 
     ; IMPORTANT: You should not change/add/remove the action names or parameters
@@ -92,6 +122,50 @@
             ; Indicates checking the corridor is riskly or not
             ; if not riskly move on
             
+        )
+    )
+    
+    ;Hero can pick up a key if the
+    ;    - hero is at current location ?loc,
+    ;    - there is a key ?k at location ?loc,
+    ;    - the hero's arm is free,
+    ;    - the location is not messy
+    ;Effect will have the hero holding the key and their arm no longer being free
+    (:action pick-up
+
+        :parameters (?loc - location ?k - key)
+
+        :precondition (and
+
+            ; Indicates hero at ?loc
+            (hero-at ?loc)
+            
+            ; Indicates checking ?k at ?loc or not
+            (is-key-loc ?k ?loc)
+
+            ; Indicates hero's arm is free
+            (is-free ?k)
+
+            ; Indicates checking ?loc is messy or not
+            (is-messy ?loc)
+            ; if ?loc is messy, can't pick up the key
+            
+            ; else pick up the key
+            ; which is in :effect below
+
+        )
+
+        :effect (and
+
+            ; Indicates the key is picked up
+            ; (not (key-at ?k ?loc))
+            
+            ; Indicates the hero is carrying the key
+            (carry ?k)
+            
+            ; Indicates the hero's arm is not free
+            (not (free ?k))
+
         )
     )
 )
