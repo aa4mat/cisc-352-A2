@@ -22,7 +22,29 @@
         ; One predicate given for free!
         (hero-at ?loc - location)
 
-        ; IMPLEMENT ME
+        ; Connection between room and corridor
+        (connected ?loc - location ?cor - corridor)
+
+        ; Key at ?loc location
+        (keyloc ?k - key ?loc - location)
+
+        ; Corridor locked
+        (locked ?cor - corridor)
+
+        ; Key colour
+        (key-color ?k - key ?colour - colour)
+
+        ; can't use
+        (cant-use ?k - key)
+
+        ; One use 
+        (one-use ?k - key)
+
+        ; two use left
+        (two-use ?k - key)
+
+        ; multiple use
+        (multiple-use ?k - key)
 
     )
 
