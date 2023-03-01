@@ -19,10 +19,59 @@
     ; You may introduce whatever predicates you would like to use
     (:predicates
 
-        ; One predicate given for free!
+        ;Room and key:
+        
+        ;The connection between room and corridor
+        (connected ?loc - location ?cor - corridor)
+
+        ;The key at ?loc location
+        (keyloc ?k - key ?loc - location)
+
+        ; Indicates the location is messy
+        (messy ?loc - location)
+
+        ; Indicates checking the location is messy or not
+        (is-messy ?loc - location)
+
+        ; is the corridor locked?
+        (is-locked ?cor - corridor)
+
+        ; Lock Locked and lock colour
+        (lockedcolor ?cor - corridor ?colour - colour)
+
+        ; is the corridor risky?
+        (is-risky ?cor - corridor)
+
+        ; is the corridor collapsed?
+        (is-collapsed ?cor - corridor)
+
+        ; Key colour
+        (key-color ?k - key ?colour - colour)
+
+        ;key can't use
+        (cant-use ?k - key)
+
+        ; One use
+        (one-use ?k - key)
+
+        ; two use left
+        (two-use ?k - key)
+
+        ; multiple use
+        (multiple-use ?k - key)
+
+        ;-----------------------------------------------------------------
+
+        ;hero itself :
+        
+        ; Indicates hero's location
         (hero-at ?loc - location)
 
-        ; IMPLEMENT ME
+        ; Indicates checking the hero's arm is carrying a key or not
+        (is-carry ?k - key)
+
+        ; Indicates checking the hero's arm is free or not
+        (is-free ?k - key)
 
     )
 
@@ -38,13 +87,21 @@
 
         :parameters (?from ?to - location ?cor - corridor)
 
-        :precondition (and
+        :precondition (and  (hero-at ?from)
+                            (connected ?from ?cor)
+                            (connected ?to ?cor)
+                            (not (is-locked ?cor))
 
             ; IMPLEMENT ME
 
         )
 
-        :effect (and
+        :effect (and    (not (hero-at ?from))
+                        (hero-at ?to)
+                        (when (is-risky ?cor)
+                        (and
+                          (is-collapsed ?cor)
+                          (is-messy ?to)))
 
             ; IMPLEMENT ME
 
