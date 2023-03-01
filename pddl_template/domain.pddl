@@ -28,14 +28,11 @@
         (is-carry ?k - key)
 
         ; Indicates checking the hero's arm is free or not
-        (is-free ?k - key)
+        (is-free)
         
         ;-----------------------------------------------------------------
         
         ; Room related:
-        
-        ; Indicates the room is messy
-        (messy ?loc - location)
 
         ; Indicates checking the room is messy or not
         (is-messy ?loc - location)
@@ -80,9 +77,6 @@
 
         ; Indicates the key have multiple use
         (multiple-use ?k - key)
-        
-        ; Indicates a lock is in the corridor
-        ;(lock-at ?cor - corridor)
         
     )
 
@@ -135,7 +129,7 @@
 
             (hero-at ?loc)
             (key-at ?k ?loc)
-            (is-free ?k)
+            (is-free)
             (not (is-messy ?loc))
 
         )
@@ -143,7 +137,7 @@
         :effect (and
 
             (is-carry ?k)
-            (not (is-free ?k))
+            (not (is-free))
 
         )
     )
@@ -158,13 +152,15 @@
 
         :precondition (and
 
-            ; IMPLEMENT ME
+            (is-carry ?k)
+            (hero-at ?loc)
 
         )
 
         :effect (and
 
-            ; IMPLEMENT ME
+            (not (is-carry ?k))
+            (is-free)
 
         )
     )
@@ -184,13 +180,37 @@
 
         :precondition (and
 
-            ; IMPLEMENT ME
+            (hero-at ?loc)
+            (is-carry ?k)
+
+            ; The hero can unlock the lock
+            (connected ?loc ?cor)
+            (is-locked ?cor)
+            (not (cant-use ?k))
+
+            ; Color of the key and the lock are same
+            (key-colour ?k ?col)
+            (lock-colour ?cor ?col)
 
         )
 
         :effect (and
 
-            ; IMPLEMENT ME
+            (not (is-locked ?cor))
+
+            (when (one-use ?k)
+                (and
+                    ; Update usage number of the key
+                    (not (one-use ?k))
+                    (cant-use ?k)
+                )
+            )
+            (when (two-use ?k)
+                (and
+                    (not (two-use ?k))
+                    (one-use ?k)
+                )
+            )
 
         )
     )
@@ -205,13 +225,14 @@
 
         :precondition (and
 
-            ; IMPLEMENT ME
+            (hero-at ?loc)
+            (is-messy ?loc)
 
         )
 
         :effect (and
 
-            ; IMPLEMENT ME
+            (not(is-messy ?loc))
 
         )
     )
