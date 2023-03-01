@@ -27,6 +27,9 @@
         ; key location according to the map + colour of the key
         (key-colour ?loc - location ?col - colour)
 
+        (is-locked ?cor - corridor)    ; is the corridor locked? 
+        ; By default, not having a lock == is-locked -> false
+
         (locked-corr ?corr - corridor ?col - colour)
 
         (is-risky ?cor - corridor)  ; is the corridor risky?
@@ -37,9 +40,8 @@
 
         (hero-holding ?k - key)             ; currently held key?
         ; in lists - holding
-        (corr ?from ?to - location)         ; corridor exists between 2 locations 
+        (is-corridor ?from ?to - location)  ; corridor exists between 2 locations 
         ; (looks like 'exists' is a keyword)
-        ; IMPLEMENT ME
 
     )
 
@@ -56,8 +58,8 @@
         :parameters (?from ?to - location ?cor - corridor)
 
         :precondition (and  (hero-at ?from)
-                            (corr ?from ?to)
-                            ; add door isn't locked
+                            (is-corridor ?from ?to)
+                            (not (is-locked ?cor))
         )
 
         :effect (and  (not (hero-at ?from))
@@ -65,9 +67,8 @@
                       (when (is-risky ?cor)
                       (and
                          (is-collapsed ?cor)
-                         (is-messy ?to))
+                         (is-messy ?to)))
                 )
-        )
     )
 
     ;Hero can pick up a key if the
