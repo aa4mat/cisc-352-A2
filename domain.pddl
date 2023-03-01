@@ -19,29 +19,56 @@
     ; You may introduce whatever predicates you would like to use
     (:predicates
 
-        ; One predicate given for free!
+        ;Room and key:
+        
+        ;The connection between room and corridor
+        (connected ?loc - location ?cor - corridor)
+
+        ;The key at ?loc location
+        (keyloc ?k - key ?loc - location)
+
+        ; Indicates whether the location is messy or not
+        (is-messy ?loc - location)
+
+        ; is the corridor locked?
+        (is-locked ?cor - corridor)
+
+        ; Lock Locked and lock colour
+        (lock-colour ?cor - corridor ?colour - colour)
+
+        ; is the corridor risky?
+        (is-risky ?cor - corridor)
+
+        ; is the corridor collapsed?
+        (is-collapsed ?cor - corridor)
+
+        ; Key colour
+        (key-colour ?k - key ?colour - colour)
+
+        ;key can't use
+        (cant-use ?k - key)
+
+        ; One use
+        (one-use ?k - key)
+
+        ; two use left
+        (two-use ?k - key)
+
+        ; multiple use
+        (multiple-use ?k - key)
+
+        ;-----------------------------------------------------------------
+
+        ;hero itself :
+        
+        ; Indicates hero's location
         (hero-at ?loc - location)
-        ; (hero-through ?cor - corridor)
 
-        (key-at ?loc - location ?col - colour)
-        ; key location according to the map + colour of the key
-        (key-colour ?loc - location ?col - colour)
+        ; Indicates checking the hero's arm is carrying a key or not
+        (is-carry ?k - key)
 
-        (is-locked ?cor - corridor)    ; is the corridor locked? 
-        ; By default, not having a lock == is-locked -> false
-
-        (locked-corr ?corr - corridor ?col - colour)
-
-        (is-risky ?cor - corridor)  ; is the corridor risky?
-
-        (is-collapsed ?cor - corridor)  ; is the corridor collapsed?
-
-        (is-messy ?loc - location)  ; is the room at location messy?
-
-        (hero-holding ?k - key)             ; currently held key?
-        ; in lists - holding
-        (is-corridor ?from ?to - location)  ; corridor exists between 2 locations 
-        ; (looks like 'exists' is a keyword)
+        ; Indicates checking the hero's arm is free or not
+        (is-free ?k - key)
 
     )
 
@@ -58,17 +85,21 @@
         :parameters (?from ?to - location ?cor - corridor)
 
         :precondition (and  (hero-at ?from)
-                            (is-corridor ?from ?to)
+                            (connected ?from ?cor)
+                            (connected ?to ?cor)
                             (not (is-locked ?cor))
         )
 
-        :effect (and  (not (hero-at ?from))
-                      (hero-at ?to)
-                      (when (is-risky ?cor)
-                      (and
-                         (is-collapsed ?cor)
-                         (is-messy ?to)))
-                )
+        :effect (and    (not (hero-at ?from))
+                        (hero-at ?to)
+                        (when (is-risky ?cor)
+                        (and
+                          (is-collapsed ?cor)
+                          (is-messy ?to)))
+
+            ; IMPLEMENT ME
+
+        )
     )
 
     ;Hero can pick up a key if the
@@ -103,15 +134,12 @@
         :parameters (?loc - location ?k - key)
 
         :precondition (and
-
-            ; IMPLEMENT ME
-
+                        (is-carry ?k)
+                        (hero-at ?loc)
         )
 
         :effect (and
-
-            ; IMPLEMENT ME
-
+                    (not(is-carry ?k))
         )
     )
 
@@ -131,12 +159,38 @@
         :precondition (and
 
             ; IMPLEMENT ME
+            (hero-at ?loc)
+            (is-carry ?k)
+
+            ; The hero can unlock the lock
+            (connected ?loc ?cor)
+            (is-locked ?cor)
+            (not (cant-use ?k))
+
+            ; Color of the key and the lock are same
+            (key-colour ?k ?col)
+            (lock-colour ?cor ?col)
 
         )
 
         :effect (and
 
             ; IMPLEMENT ME
+            (not (is-locked ?cor))
+
+            (when (one-use ?k)
+                (and
+                    ; Update usage number of the key
+                    (not (one-use ?k))
+                    (cant-use ?k)
+                )
+            )
+            (when (two-use ?k)
+                (and
+                    (not (two-use ?k))
+                    (one-use ?k)
+                )
+            )
 
         )
     )
@@ -152,14 +206,16 @@
         :precondition (and
 
             ; IMPLEMENT ME
+            (hero-at ?loc)
+            (is-messy ?loc)
 
         )
 
         :effect (and
 
             ; IMPLEMENT ME
+            (not(is-messy ?loc))
 
         )
     )
-
 )
