@@ -14,6 +14,7 @@
 
     ; Hero location and carrying status
     (hero-at loc-2-2)
+    (is-free)
 
     ; Locationg <> Corridor Connections
     (connected loc-1-2 c1222)
@@ -40,11 +41,18 @@
 
 
     ; Locked corridors
-    (locked c1222)
-    (locked c2122)
-    (locked c2223)
-    (locked c2232)
-    (locked c3242)
+    
+    (is-locked c1222)
+    (is-locked c2122)
+    (is-locked c2223)
+    (is-locked c2232)
+    (is-locked c3242)
+
+    (lockedcolor c1222 yellow)
+    (lockedcolor c2122 purple)
+    (lockedcolor c2223 yellow)
+    (lockedcolor c2232 green)
+    (lockedcolor c3242 rainbow)
 
     ; Risky corridors
 
