@@ -16,33 +16,70 @@
         red yellow green purple rainbow - colour
     )
 
-    ; You may introduce whatever predicates you would like to use
+   ; You may introduce whatever predicates you would like to use
     (:predicates
+        
+        ; Hero related:
 
-        ; One predicate given for free!
+        ; Indicates hero's location
         (hero-at ?loc - location)
-        ; (hero-through ?cor - corridor)
 
-        (key-at ?loc - location ?col - colour)
-        ; key location according to the map + colour of the key
-        (key-colour ?loc - location ?col - colour)
+        ; Indicates checking the hero's arm is carrying a key or not
+        (is-carry ?k - key)
 
-        (is-locked ?cor - corridor)    ; is the corridor locked? 
-        ; By default, not having a lock == is-locked -> false
+        ; Indicates checking the hero's arm is free or not
+        (is-free)
+        
+        ;-----------------------------------------------------------------
+        
+        ; Room related:
+        
+        ; Indicates checking the room is messy or not
+        (is-messy ?loc - location)
+        
+        ;-----------------------------------------------------------------
+        
+        ; Corridor related:
+        
+        ; Indicates whether a corridor exists between two locations
+        (is-corridor ?loc1 ?loc2 - location)
 
-        (locked-corr ?corr - corridor ?col - colour)
+        ; Indicates there is a connection between room and corridor
+        (connected ?loc - location ?cor - corridor)
+        
+        ; Indicates checking the corridor is locked or not
+        (is-locked ?cor - corridor)
+        
+        ; Indicates the colour of the lock
+        (lock-colour ?cor - corridor ?colour - colour)
+        
+        ; Indicates checking the corridor is riskly or not
+        (is-risky ?cor - corridor)
+        
+        ; Indicates the corridor is collapsed or not
+        (is-collapsed ?cor - corridor)
+        
+        ;-----------------------------------------------------------------
+        
+        ; Key related:
 
-        (is-risky ?cor - corridor)  ; is the corridor risky?
+        ; Indicates a key's location
+        (key-at ?k - key ?loc - location)
 
-        (is-collapsed ?cor - corridor)  ; is the corridor collapsed?
+        ; Indicates the colour of the key
+        (key-colour ?k - key ?colour - colour)
+        
+        ; Indicates the key can't be used anymore
+        (cant-use ?k - key)
 
-        (is-messy ?loc - location)  ; is the room at location messy?
+        ; Indicates the key has one use remaining
+        (one-use ?k - key)
 
-        (hero-holding ?k - key)             ; currently held key?
-        ; in lists - holding
-        (is-corridor ?from ?to - location)  ; corridor exists between 2 locations 
-        ; (looks like 'exists' is a keyword)
+        ; Indicates the key have two uses remaining
+        (two-use ?k - key)
 
+        ; Indicates the key has multiple uses
+        (multiple-use ?k - key)
     )
 
     ; IMPORTANT: You should not change/add/remove the action names or parameters
@@ -58,17 +95,21 @@
         :parameters (?from ?to - location ?cor - corridor)
 
         :precondition (and  (hero-at ?from)
-                            (is-corridor ?from ?to)
+                            (connected ?from ?cor)   ; corridor connection
+                            (connected ?to ?cor)
+                            (is-corridor ?from ?to)  ; corridor existence - this prevents 'moving' from a location to itself
                             (not (is-locked ?cor))
         )
 
-        :effect (and  (not (hero-at ?from))
-                      (hero-at ?to)
-                      (when (is-risky ?cor)
-                      (and
-                         (is-collapsed ?cor)
-                         (is-messy ?to)))
-                )
+        :effect (and    (not (hero-at ?from))
+                        (hero-at ?to)
+                        (when (is-risky ?cor)
+                        (and
+                          (is-collapsed ?cor)
+                          (not (is-corridor ?from ?to))
+                          (not (is-corridor ?to ?from))
+                          (is-messy ?to)))
+        )
     )
 
     ;Hero can pick up a key if the
@@ -82,16 +123,18 @@
         :parameters (?loc - location ?k - key)
 
         :precondition (and
-
-            ; IMPLEMENT ME
-
+            (hero-at ?loc)
+            (key-at ?k ?loc)
+            (is-free)
+            (not (is-messy ?loc))
         )
 
         :effect (and
-
-            ; IMPLEMENT ME
-
+            (is-carry ?k)
+            (not (is-free))
+            (not (key-at ?k ?loc))
         )
+
     )
 
     ;Hero can drop a key if the
@@ -103,14 +146,14 @@
         :parameters (?loc - location ?k - key)
 
         :precondition (and
-
-            ; IMPLEMENT ME
-
+                        (is-carry ?k)
+                        (hero-at ?loc)
         )
 
         :effect (and
-
-            ; IMPLEMENT ME
+                    (not(is-carry ?k))
+                    (is-free)
+                    (key-at ?k ?loc)
 
         )
     )
@@ -130,13 +173,37 @@
 
         :precondition (and
 
-            ; IMPLEMENT ME
+            (hero-at ?loc)
+            (is-carry ?k)
+
+            ; The hero can unlock the lock
+            (connected ?loc ?cor)
+            (is-locked ?cor)
+            (not (cant-use ?k))
+
+            ; Colour of the key and the lock are same
+            (key-colour ?k ?col)
+            (lock-colour ?cor ?col)
 
         )
 
         :effect (and
 
-            ; IMPLEMENT ME
+            (not (is-locked ?cor))
+
+            (when (one-use ?k)
+                (and
+                    ; Update usage number of the key
+                    (not (one-use ?k))
+                    (cant-use ?k)
+                )
+            )
+            (when (two-use ?k)
+                (and
+                    (not (two-use ?k))
+                    (one-use ?k)
+                )
+            )
 
         )
     )
@@ -150,15 +217,12 @@
         :parameters (?loc - location)
 
         :precondition (and
-
-            ; IMPLEMENT ME
-
+            (hero-at ?loc)
+            (is-messy ?loc)
         )
 
         :effect (and
-
-            ; IMPLEMENT ME
-
+            (not(is-messy ?loc))
         )
     )
 
