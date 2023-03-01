@@ -20,68 +20,134 @@
     (connected loc-2-1 c2122)
     (connected loc-2-2 c2122)
 
+    (is-corridor loc-2-1 loc-2-2)
+    (is-corridor loc-2-2 loc-2-1)
+
     (connected loc-1-2 c1222)
     (connected loc-2-2 c1222)
+
+    (is-corridor loc-1-2 loc-2-2)
+    (is-corridor loc-2-2 loc-1-2)
 
     (connected loc-2-2 c2232)
     (connected loc-3-2 c2232)
 
+    (is-corridor loc-2-2 loc-3-2)
+    (is-corridor loc-3-2 loc-2-2)
+
     (connected loc-1-2 c1213)
     (connected loc-1-3 c1213)
+
+    (is-corridor loc-1-2 loc-1-3)
+    (is-corridor loc-1-3 loc-1-2)
 
     (connected loc-1-2 c1223)
     (connected loc-2-3 c1223)
 
+    (is-corridor loc-1-2 loc-2-3)
+    (is-corridor loc-2-3 loc-1-2)
+
     (connected loc-2-2 c2223)
     (connected loc-2-3 c2223)
+
+    (is-corridor loc-2-2 loc-2-3)
+    (is-corridor loc-2-3 loc-2-2)
 
     (connected loc-3-2 c3223)
     (connected loc-2-3 c3223)
 
+    (is-corridor loc-3-2 loc-2-3)
+    (is-corridor loc-2-3 loc-3-2)
+
     (connected loc-3-2 c3233)
     (connected loc-3-3 c3233)
+
+    (is-corridor loc-3-2 loc-3-3)
+    (is-corridor loc-3-3 loc-3-2)
 
     (connected loc-1-3 c1323)
     (connected loc-2-3 c1323)
 
+    (is-corridor loc-1-3 loc-2-3)
+    (is-corridor loc-2-3 loc-1-3)
+
     (connected loc-2-3 c2333)
     (connected loc-3-3 c2333)
+
+    (is-corridor loc-2-3 loc-3-3)
+    (is-corridor loc-3-3 loc-2-3)
     
     (connected loc-1-3 c1314)
     (connected loc-1-4 c1314)
+
+    (is-corridor loc-1-3 loc-1-3)
+    (is-corridor loc-1-4 loc-1-3)
     
     (connected loc-2-3 c2314)
     (connected loc-1-4 c2314)
 
+    (is-corridor loc-2-3 loc-1-4)
+    (is-corridor loc-1-4 loc-2-3)
+
     (connected loc-2-3 c2324)
     (connected loc-2-4 c2324)
+
+    (is-corridor loc-2-3 loc-2-4)
+    (is-corridor loc-2-4 loc-2-3)
     
     (connected loc-2-3 c2334)
     (connected loc-3-4 c2334)
 
+    (is-corridor loc-2-3 loc-3-4)
+    (is-corridor loc-3-4 loc-2-3)
+
     (connected loc-3-3 c3334)
     (connected loc-3-4 c3334)
 
+    (is-corridor loc-3-3 loc-3-4)
+    (is-corridor loc-3-4 loc-2-3)
+
     (connected loc-1-4 c1424)
     (connected loc-2-4 c1424)
+
+    (is-corridor loc-1-4 loc-2-4)
+    (is-corridor loc-2-4 loc-1-4)
     
     (connected loc-2-4 c2434)
     (connected loc-3-4 c2434)
+
+    (is-corridor loc-2-4 loc-3-4)
+    (is-corridor loc-3-4 loc-2-4)
     
     (connected loc-2-4 c2425)
     (connected loc-2-5 c2425)
 
+    (is-corridor loc-2-4 loc-2-5)
+    (is-corridor loc-2-5 loc-2-4)
+
     (connected loc-2-5 c2535)
     (connected loc-3-5 c2535)
+
+    (is-corridor loc-2-5 loc-3-5)
+    (is-corridor loc-3-5 loc-2-5)
     
     (connected loc-3-5 c3545)
     (connected loc-4-5 c3545)
 
+    (is-corridor loc-3-5 loc-4-5)
+    (is-corridor loc-4-5 loc-3-5)
+
     (connected loc-4-5 c4544)
     (connected loc-4-4 c4544)
 
+    (is-corridor loc-4-5 loc-4-4)
+    (is-corridor loc-4-4 loc-4-5)
+
     (connected loc-4-4 c4443)
     (connected loc-4-3 c4443)
+
+    (is-corridor loc-4-4 loc-4-3)
+    (is-corridor loc-4-3 loc-4-4)
 
     ; Key locations
     (key-at key1 loc-2-1)
@@ -111,10 +177,19 @@
     (is-locked c4544)
     (is-locked c4443)
 
-    (lock-colour c1222 red)
-    (lock-colour c1222 purple)
-    (lock-colour c1222 green)
-    (lock-colour c1222 rainbow)
+    (lock-colour c2223 red)
+    (lock-colour c1223 red)
+    (lock-colour c1323 red)
+    (lock-colour c2314 red)
+    (lock-colour c2324 red)
+    (lock-colour c3223 red)
+    (lock-colour c2333 red)
+    (lock-colour c2334 red)
+    (lock-colour c2425 purple)
+    (lock-colour c2535 green)
+    (lock-colour c3545 purple)
+    (lock-colour c4544 green)
+    (lock-colour c4443 rainbow)
 
     ; Risky corridors
     (is-risky c2223)

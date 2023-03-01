@@ -17,6 +17,18 @@
     (is-free)
 
     ; Locationg <> Corridor Connections
+    (is-corridor loc-1-2 loc-2-2)
+    (is-corridor loc-2-2 loc-1-2)
+
+    (is-corridor loc-2-1 loc-2-2)
+    (is-corridor loc-2-2 loc-2-1)
+
+    (is-corridor loc-2-2 loc-2-3)
+    (is-corridor loc-2-3 loc-2-2)
+
+    (is-corridor loc-3-2 loc-4-2)
+    (is-corridor loc-4-2 loc-3-2)
+
     (connected loc-1-2 c1222)
     (connected loc-2-2 c1222)
 
