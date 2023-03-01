@@ -63,7 +63,7 @@
         ;-----------------------------------------------------------------
 
         ;hero itself :
-        
+
         ; Indicates hero's location
         (hero-at ?loc - location)
 
@@ -168,12 +168,38 @@
         :precondition (and
 
             ; IMPLEMENT ME
+            (is-carry ?k)
+
+            ; The hero can unlock the lock
+            (hero-at ?loc)
+            (connected ?loc ?cor)
+            (is-locked ?cor)
+            (not (cant-use ?k))
+
+            ; Color of the key and the lock are same
+            (key-color ?k ?col)
+            (lockedcolor ?cor ?col)
 
         )
 
         :effect (and
 
             ; IMPLEMENT ME
+            (not (is-locked ?cor))
+
+            (when (one-use ?k)
+                (and
+                    ; Update usage number of the key
+                    (not (one-use ?k))
+                    (cant-use ?k)
+                )
+            )
+            (when (two-use ?k)
+                (and
+                    (not (two-use ?k))
+                    (one-use ?k)
+                )
+            )
 
         )
     )
@@ -189,12 +215,15 @@
         :precondition (and
 
             ; IMPLEMENT ME
+            (hero-at ?loc)
+            (is-messy ?loc)
 
         )
 
         :effect (and
 
             ; IMPLEMENT ME
+            (not(is-messy ?loc))
 
         )
     )
