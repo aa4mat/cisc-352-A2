@@ -84,6 +84,7 @@
     (connected loc-4-4 c4443)
     (connected loc-4-3 c4443)
 
+
     ; Key locations
     (key-at key1 loc-2-1)
 
