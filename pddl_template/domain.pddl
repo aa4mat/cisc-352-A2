@@ -95,20 +95,21 @@
         :parameters (?from ?to - location ?cor - corridor)
 
         :precondition (and  (hero-at ?from)
+                            (not (hero-at ?to))
                             (connected ?from ?cor)   ; corridor connection
                             (connected ?to ?cor)
-                            (is-corridor ?from ?to)  ; corridor existence - this prevents 'moving' from a location to itself
+                            ;(is-corridor ?from ?to)  ; corridor existence - this prevents 'moving' from a location to itself
                             (not (is-locked ?cor))
         )
 
         :effect (and    (not (hero-at ?from))
                         (hero-at ?to)
                         (when (is-risky ?cor)
-                        (and
-                          (is-collapsed ?cor)
-                          (not (is-corridor ?from ?to))
-                          (not (is-corridor ?to ?from))
-                          (is-messy ?to)))
+                            (and
+                            (is-collapsed ?cor)
+                            (not (connected ?from ?cor))
+                            (not (connected ?to ?cor))
+                            (is-messy ?to)))
         )
     )
 
@@ -190,10 +191,10 @@
         :effect (and
 
             (not (is-locked ?cor))
-
+            ; Update usage number of the key
             (when (one-use ?k)
                 (and
-                    ; Update usage number of the key
+
                     (not (one-use ?k))
                     (cant-use ?k)
                 )

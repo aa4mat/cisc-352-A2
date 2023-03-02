@@ -17,18 +17,6 @@
     (is-free)
 
     ; Locationg <> Corridor Connections
-    (is-corridor loc-1-2 loc-2-2)
-    (is-corridor loc-2-2 loc-1-2)
-
-    (is-corridor loc-2-1 loc-2-2)
-    (is-corridor loc-2-2 loc-2-1)
-
-    (is-corridor loc-2-2 loc-2-3)
-    (is-corridor loc-2-3 loc-2-2)
-
-    (is-corridor loc-3-2 loc-4-2)
-    (is-corridor loc-4-2 loc-3-2)
-
     (connected loc-1-2 c1222)
     (connected loc-2-2 c1222)
 
@@ -46,8 +34,8 @@
 
 
     ; Key locations
-    (key-at key1 loc-1-2)
-    (key-at key2 loc-2-1)
+    (key-at key1 loc-2-1)
+    (key-at key2 loc-1-2)
     (key-at key3 loc-2-2)
     (key-at key4 loc-2-3)
 
@@ -62,8 +50,8 @@
 
     (lock-colour c1222 yellow)
     (lock-colour c2122 purple)
-    (lock-colour c2223 yellow)
-    (lock-colour c2232 green)
+    (lock-colour c2223 green)
+    (lock-colour c2232 yellow)
     (lock-colour c3242 rainbow)
 
     ; Risky corridors

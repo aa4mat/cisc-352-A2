@@ -16,40 +16,6 @@
     (hero-at loc-1-2)
     (is-free)
 
-    ; Existing corridors
-    (is-corridor loc-3-1 loc-3-2)
-    (is-corridor loc-3-2 loc-3-1)
-
-    (is-corridor loc-1-2 loc-2-2)
-    (is-corridor loc-2-2 loc-1-2)
-
-    (is-corridor loc-2-2 loc-3-2)
-    (is-corridor loc-3-2 loc-2-2)
-
-    (is-corridor loc-3-2 loc-4-2)
-    (is-corridor loc-4-2 loc-3-2)
-
-    (is-corridor loc-2-2 loc-2-3)
-    (is-corridor loc-2-3 loc-2-2)
-
-    (is-corridor loc-3-2 loc-3-3)
-    (is-corridor loc-3-3 loc-3-2)
-
-    (is-corridor loc-2-3 loc-3-3)
-    (is-corridor loc-3-3 loc-2-3)
-
-    (is-corridor loc-2-3 loc-2-4)
-    (is-corridor loc-2-4 loc-2-3)
-
-    (is-corridor loc-3-3 loc-3-4)
-    (is-corridor loc-3-4 loc-3-3)
-
-    (is-corridor loc-2-4 loc-3-4)
-    (is-corridor loc-3-4 loc-2-4)
-
-    (is-corridor loc-3-4 loc-4-4)
-    (is-corridor loc-4-4 loc-3-4)
-
     ; Location <> Corridor Connections
     (connected loc-3-1 c3132)
     (connected loc-3-2 c3132)
